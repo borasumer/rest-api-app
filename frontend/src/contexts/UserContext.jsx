@@ -8,8 +8,7 @@ const UserContextProvider = (props) => {
 
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
-  const [userEdit, setUserEdit] = useState([])
-
+  const [currentUserId, setCurrentUserId] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -27,22 +26,19 @@ const UserContextProvider = (props) => {
     setUser({ ...user, [event.target.name]: event.target.value })
     console.log(user)
   }
-  const handleEditChange = (event) => {
-    event.persist();
-    setUserEdit({ ...userEdit, [event.target.name]: event.target.value })
-    console.log(userEdit)
-  }
-
+  console.log('user', user)
   const handleSubmit = () => {
     axios.post('http://localhost:5000/api/users', user)
   }
   const handleDelete = (user) => {
     axios.delete(`http://localhost:5000/api/users/${user._id}`)
   }
-  const handleEdit = (user) => {
-    const currentUser = userEdit
-    alert(currentUser.name)
-    axios.put(`http://localhost:5000/api/users/5d82a4056ba52ebb1fff1927`, currentUser)
+  const handleUserId = (user) => {
+    setCurrentUserId(user._id)
+  }
+  const handleEdit = () => {
+    alert(currentUserId)
+    axios.put(`http://localhost:5000/api/users/${currentUserId}`, user)
       .then(response => {
         alert(response)
       })
@@ -50,13 +46,9 @@ const UserContextProvider = (props) => {
         alert(err)
       })
   }
-  const handleUserId = (user) => {
-    setUser({ id: user._id })
-    console.log(user)
-  }
 
   return (
-    <UserContext.Provider value={{ users, setUsers, handleChange, handleSubmit, handleDelete, handleEdit, handleUserId, handleEditChange }}>
+    <UserContext.Provider value={{ users, setUsers, handleChange, handleSubmit, handleDelete, handleEdit, handleUserId }}>
       {props.children}
     </UserContext.Provider>
   );
