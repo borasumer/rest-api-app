@@ -5,11 +5,11 @@ import UserDetails from './UserDetails';
 
 
 const UserList = () => {
-  const { users, handleDelete, handleEdit } = useContext(UserContext)
+  const { users, handleDelete, handleEdit, handleUserId } = useContext(UserContext)
   return (
     <div className="App">
       {users.map(user => {
-        return <UserDetails key={user._id} user={user} handleDelete={handleDelete} handleEdit={handleEdit} />
+        return <UserDetails key={user._id} user={user} handleDelete={handleDelete} handleEdit={handleEdit} handleUserId={handleUserId} />
       })}
     </div>
   );

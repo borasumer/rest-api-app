@@ -24,7 +24,7 @@ router.post('/users', async (req, res) => {
 //!update a user
 router.put('/users/:id', async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body)
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.send(user)
   } catch (err) {
     res.status(422).json({ message: err.message })

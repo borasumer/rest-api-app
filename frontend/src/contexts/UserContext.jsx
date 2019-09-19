@@ -40,7 +40,9 @@ const UserContextProvider = (props) => {
     axios.delete(`http://localhost:5000/api/users/${user._id}`)
   }
   const handleEdit = (user) => {
-    axios.put(`http://localhost:5000/api/users/${user._id}`, user)
+    const currentUser = userEdit
+    alert(currentUser.name)
+    axios.put(`http://localhost:5000/api/users/5d82a4056ba52ebb1fff1927`, currentUser)
       .then(response => {
         alert(response)
       })
@@ -48,9 +50,13 @@ const UserContextProvider = (props) => {
         alert(err)
       })
   }
+  const handleUserId = (user) => {
+    setUser({ id: user._id })
+    console.log(user)
+  }
 
   return (
-    <UserContext.Provider value={{ users, setUsers, handleChange, handleSubmit, handleDelete, handleEdit, handleEditChange }}>
+    <UserContext.Provider value={{ users, setUsers, handleChange, handleSubmit, handleDelete, handleEdit, handleUserId, handleEditChange }}>
       {props.children}
     </UserContext.Provider>
   );
